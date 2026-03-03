@@ -1,28 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:interview/const.dart';
+import 'package:interview/features/products/presentation/products_controller.dart';
 import 'package:interview/screens/widgets/bottom_booking_summary.dart';
 import 'package:interview/screens/widgets/primary_button.dart';
 import 'package:interview/screens/widgets/rounded_input_field.dart';
 import 'package:interview/screens/widgets/rounded_selector.dart';
 import 'package:interview/screens/widgets/secondary_button.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
-class ExperienceDetailScreen extends StatefulWidget {
+class ExperienceDetailScreen extends ConsumerStatefulWidget {
   final String title;
   final String image;
   final int price;
+  final String? productId;
 
   const ExperienceDetailScreen({
     super.key,
     required this.title,
     required this.image,
     required this.price,
+    this.productId,
   });
 
   @override
-  State<ExperienceDetailScreen> createState() => _ExperienceDetailScreenState();
+  ConsumerState<ExperienceDetailScreen> createState() =>
+      _ExperienceDetailScreenState();
 }
 
-class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
+class _ExperienceDetailScreenState
+    extends ConsumerState<ExperienceDetailScreen> {
   final List<int> peopleOptions = [10, 15, 20, 25, 30];
   final List<String> durationOptions = ["1hr", "2hrs", "3hrs", "4hrs"];
 
@@ -59,7 +66,7 @@ class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
       context: context,
       initialTime:
           selectedDateTime != null
-              ? TimeOfDay.fromDateTime(selectedDateTime!)
+              ? TimeOfDay.fromDateTime(selectedDateTime)
               : TimeOfDay.now(),
       builder: (context, child) {
         return Theme(
@@ -88,6 +95,18 @@ class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final productAsync =
+        widget.productId == null
+            ? null
+            : ref.watch(productDetailsProvider(widget.productId!));
+
+    final title = productAsync?.value?.name ?? widget.title;
+    final image = productAsync?.value?.primaryImageUrl ?? widget.image;
+    final price = productAsync?.value?.minPrice ?? widget.price;
+    final description =
+        productAsync?.value?.description ??
+        productAsync?.value?.meta?.description;
+
     return Scaffold(
       backgroundColor: const Color(0xFF053C5E),
       body: Stack(
@@ -96,7 +115,14 @@ class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
           SizedBox(
             height: 360,
             width: double.infinity,
-            child: Image.network(widget.image, fit: BoxFit.cover),
+            child: CachedNetworkImage(
+              imageUrl: image,
+              fit: BoxFit.cover,
+              placeholder:
+                  (context, url) => Container(color: AppColors.subcolor),
+              errorWidget:
+                  (context, url, error) => Container(color: AppColors.subcolor),
+            ),
           ),
 
           // Back button
@@ -136,7 +162,7 @@ class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
                     const SizedBox(height: 20),
 
                     Text(
-                      widget.title,
+                      title,
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24,
@@ -146,9 +172,10 @@ class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
 
                     const SizedBox(height: 6),
 
-                    const Text(
-                      "Enjoy an amazing boat cruising experience at lagos water craft.",
-                      style: TextStyle(color: Colors.white, fontSize: 15),
+                    Text(
+                      description ??
+                          "Enjoy an amazing boat cruising experience at lagos water craft.",
+                      style: const TextStyle(color: Colors.white, fontSize: 15),
                     ),
 
                     const SizedBox(height: 22),
@@ -271,7 +298,7 @@ class _ExperienceDetailScreenState extends State<ExperienceDetailScreen> {
 
                     BottomBookingSummary(
                       duration: selectedDuration,
-                      total: widget.price,
+                      total: price,
                     ),
 
                     const SizedBox(height: 20),

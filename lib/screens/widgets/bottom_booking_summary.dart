@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:interview/const.dart';
+import 'package:interview/utils/money_formatter.dart';
 
 class BottomBookingSummary extends StatelessWidget {
   final String duration;
@@ -38,9 +39,12 @@ class BottomBookingSummary extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text("Total:", style: TextStyle(color: Colors.white70)),
+              const Text(
+                "Total (VAT inclusive):",
+                style: TextStyle(color: Colors.white70),
+              ),
               Text(
-                "₦${total.toStringAsFixed(0)}.00",
+                MoneyFormatter.ngn(total, decimalDigits: 0),
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,

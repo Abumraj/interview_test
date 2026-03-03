@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:interview/const.dart';
+import 'package:interview/utils/custom_styles.dart';
 
 class RoundedSelector extends StatelessWidget {
   final String label;
@@ -26,12 +28,14 @@ class RoundedSelector extends StatelessWidget {
               selected ? AppColors.bottomNavBarHighlightColor : backgroundColor,
           borderRadius: BorderRadius.circular(28),
         ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: selected ? Colors.white : Colors.white70,
-            fontSize: 15,
-            fontWeight: FontWeight.w600,
+        child: Center(
+          child: Text(
+            label,
+            style: CustomTextStyle.bodyMedium.copyWith(
+              color: Colors.white,
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ),
@@ -41,6 +45,7 @@ class RoundedSelector extends StatelessWidget {
 
 class SegmentedProgressIndicator extends StatelessWidget {
   final int currentValue;
+  final List<int>? values;
   final int maxValue;
   final int segments;
   final Color activeColor;
@@ -51,6 +56,7 @@ class SegmentedProgressIndicator extends StatelessWidget {
   const SegmentedProgressIndicator({
     Key? key,
     required this.currentValue,
+    this.values,
     this.maxValue = 30,
     this.segments = 5,
     this.activeColor = Colors.blue,
@@ -61,64 +67,82 @@ class SegmentedProgressIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final segmentValue = maxValue / segments;
-    final activeSegments = (currentValue / segmentValue).ceil();
+    final computedSegments = values?.length ?? segments;
+    final segmentValue = maxValue / computedSegments;
 
     return Container(
-      padding: EdgeInsets.all(12),
+      padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(25),
         border: Border.all(color: Colors.white.withOpacity(0.2), width: 1),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: List.generate(segments, (index) {
-          final value = (index + 1) * segmentValue.toInt();
-          final isActive = currentValue == value;
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          const circleSize = 40.0;
+          final connectorCount = (computedSegments - 1).clamp(0, 1000);
 
-          return Row(
-            children: [
-              // Circle indicator with tap
-              GestureDetector(
-                onTap: () => onSegmentTap?.call(value),
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: isActive ? activeColor : inactiveColor,
-                    border: Border.all(
-                      color: isActive ? activeColor : Colors.white,
-                      width: 2,
-                    ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      value.toString(),
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+          final available =
+              constraints.maxWidth - (computedSegments * circleSize);
+          final connectorWidth =
+              connectorCount == 0 ? 0.0 : (available / connectorCount);
+
+          final clampedConnectorWidth =
+              connectorWidth < 0 ? 0.0 : connectorWidth;
+
+          return SizedBox(
+            height: circleSize,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(computedSegments, (index) {
+                final value =
+                    values != null
+                        ? values![index]
+                        : ((index + 1) * segmentValue).toInt();
+                final isActive = currentValue == value;
+
+                return Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    GestureDetector(
+                      onTap: () => onSegmentTap?.call(value),
+                      child: Container(
+                        width: circleSize,
+                        height: circleSize,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: isActive ? activeColor : inactiveColor,
+                          // border: Border.all(
+                          //   color: isActive ? activeColor : Colors.white,
+                          //   width: 2,
+                          // ),
+                        ),
+                        child: Center(
+                          child: Text(
+                            value.toString(),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              // Dotted line connector (except for last item)
-              if (index < segments - 1)
-                CustomPaint(
-                  size: Size(35, 2),
-                  painter: DottedLinePainter(
-                    color: Colors.white,
-                    // isActive && index + 1 < activeSegments
-                    //     ? activeColor
-                    //     : inactiveColor,
-                  ),
-                ),
-            ],
+                    if (index < computedSegments - 1)
+                      SizedBox(
+                        width: clampedConnectorWidth,
+                        height: 2,
+                        child: CustomPaint(
+                          painter: DottedLinePainter(color: Colors.white),
+                        ),
+                      ),
+                  ],
+                );
+              }),
+            ),
           );
-        }),
+        },
       ),
     );
   }

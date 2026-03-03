@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:interview/const.dart';
 
 class RoundedInputField extends StatelessWidget {
   final String hint;
@@ -25,7 +26,7 @@ class RoundedInputField extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 4),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.15),
+          color: AppColors.subCardcolor,
           borderRadius: BorderRadius.circular(28),
         ),
         child: Row(

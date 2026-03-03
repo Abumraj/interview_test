@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:interview/const.dart';
 
 class MembershipBanner extends StatelessWidget {
@@ -14,15 +16,20 @@ class MembershipBanner extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
-        children: const [
-          Icon(Icons.workspace_premium, color: Colors.amber, size: 30),
-          SizedBox(width: 12),
+        children: [
+          SvgPicture.asset(
+            'assets/images/crown.svg',
+            width: 30,
+            height: 30,
+            colorFilter: const ColorFilter.mode(Colors.amber, BlendMode.srcIn),
+          ),
+          const SizedBox(width: 12),
           Text(
             "Silver Membership Plan",
             style: TextStyle(
-              fontSize: 20,
+              fontSize: 24.sp,
               color: Colors.white,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],

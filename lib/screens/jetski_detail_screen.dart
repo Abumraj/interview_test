@@ -4,6 +4,7 @@ import 'widgets/rounded_input_field.dart';
 import 'widgets/primary_button.dart';
 import 'widgets/secondary_button.dart';
 import 'widgets/bottom_booking_summary.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class JetSkiDetailScreen extends StatefulWidget {
   final String title;
@@ -40,7 +41,15 @@ class _JetSkiDetailScreenState extends State<JetSkiDetailScreen> {
           SizedBox(
             height: 360,
             width: double.infinity,
-            child: Image.network(widget.image, fit: BoxFit.cover),
+            child: CachedNetworkImage(
+              imageUrl: widget.image,
+              fit: BoxFit.cover,
+              placeholder:
+                  (context, url) => Container(color: const Color(0xFF053C5E)),
+              errorWidget:
+                  (context, url, error) =>
+                      Container(color: const Color(0xFF053C5E)),
+            ),
           ),
 
           // Back button

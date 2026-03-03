@@ -1,0 +1,1283 @@
+{
+	"info": {
+		"_postman_id": "3519c8ab-6436-4c92-93a8-a3b703ee404a",
+		"name": "LWC Docs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22769661",
+		"_collection_link": "https://orange-space-172232.postman.co/workspace/2767f574-07c6-4802-9100-f136b8bafeed/collection/22769661-3519c8ab-6436-4c92-93a8-a3b703ee404a?action=share&source=collection_link&creator=22769661"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Sign up",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"Micheal\",\r\n    \"lastName\": \"Peters\",\r\n    \"email\": \"micheallangecol@yahoo.com\",\r\n    \"phoneNumber\": \"09063583589\",\r\n    \"password\": \"123456789\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lwc_dev_baseUrl}}/auth/register",
+									"host": [
+										"{{lwc_dev_baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "332"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"14c-LeOhpYdhXPk/ujzeVKnuzz8VXsI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Dec 2025 08:28:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Account created successfully\",\n    \"user\": {\n        \"id\": \"cmjsbsiv50000oox3ypynsma6\",\n        \"firstName\": \"Micheal\",\n        \"lastName\": \"Peters\",\n        \"email\": \"micheallangecol@yahoo.com\",\n        \"phoneNumber\": \"09063583589\",\n        \"refreshToken\": null,\n        \"pin\": null,\n        \"isVerified\": false,\n        \"role\": \"USER\",\n        \"createdAt\": \"2025-12-30T08:28:54.017Z\",\n        \"updatedAt\": \"2025-12-30T08:28:54.017Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Wisdom\",\r\n    \"lastName\": \"Peters\",\r\n    // \"email\": \"drmusicpiano@gmail.com\",\r\n    \"phoneNumber\": \"09063583589\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lwc_dev_baseUrl}}/v1/auth/register",
+							"host": [
+								"{{lwc_dev_baseUrl}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"drmusicpiano@gmail.com\",\r\n    \"password\": \"123456789\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lwc_dev_baseUrl}}/auth/login",
+									"host": [
+										"{{lwc_dev_baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "732"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2dc-kk1+bPWkANn4diPGyvh9+t0J410\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Dec 2025 05:58:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Login successful\",\n    \"user\": {\n        \"id\": \"cmjg4dfs30000psx3j37ye3zj\",\n        \"email\": \"drmusicpiano@gmail.com\",\n        \"firstName\": \"Wisdom\",\n        \"lastName\": \"Peters\",\n        \"phoneNumber\": \"09063583589\",\n        \"isVerified\": true,\n        \"role\": \"USER\",\n        \"pin\": null\n    },\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbWpnNGRmczMwMDAwcHN4M2ozN3llM3pqIiwiZW1haWwiOiJkcm11c2ljcGlhbm9AZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NjcwNzQzMTgsImV4cCI6MTc2NzA3NTIxOH0.SJH6_PyjFaYeEDCuWzZbEUMBV8SADEoypsy5hpFtf3A\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbWpnNGRmczMwMDAwcHN4M2ozN3llM3pqIiwiZW1haWwiOiJkcm11c2ljcGlhbm9AZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NjcwNzQzMTgsImV4cCI6MTc2NzY3OTExOH0.OVD9Lxrvisty1oA1m5H3-sksykhJlrlYpYzv7Tx4SVc\"\n}"
+						}
+					]
+				},
+				{
+					"name": "OTP Request",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"drmusicpiano@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lwc_dev_baseUrl}}/auth/otp/request",
+							"host": [
+								"{{lwc_dev_baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"otp",
+								"request"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OTP Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"micheallangecol@yahoo.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lwc_dev_baseUrl}}/auth/otp/request",
+									"host": [
+										"{{lwc_dev_baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"otp",
+										"request"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "35"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"23-YsSrbfhPBo5PNRhpOhArqd7KnMQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Dec 2025 08:29:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"OTP sent successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Verify OTP",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"drmusicpiano@gmail.com\",\r\n    \"otp\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lwc_dev_baseUrl}}/auth/otp/verify",
+							"host": [
+								"{{lwc_dev_baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"otp",
+								"verify"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"micheallangecol@yahoo.com\",\r\n    \"otp\": \"296443\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lwc_dev_baseUrl}}/auth/otp/verify",
+									"host": [
+										"{{lwc_dev_baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"otp",
+										"verify"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "39"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"27-gmemsCpNdXZC5ApWNn/ZciPyh/8\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Dec 2025 08:31:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"OTP verified successfully\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Forgot Password",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"micheallangecol@yahoo.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lwc_dev_baseUrl}}/auth/forgot-password",
+									"host": [
+										"{{lwc_dev_baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"forgot-password"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3a-16QuYzeAHEukBF8YX4zS9UKrd70\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Dec 2025 08:38:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"If account exists, email sent\",\n    \"success\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"token\": \"7c449d95abd18e4f27d57826620c324cee91417061c0f54c84bafbe776b8614c\",\r\n    \"newPassword\": \"password123456\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lwc_dev_baseUrl}}/auth/reset-password",
+									"host": [
+										"{{lwc_dev_baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"reset-password"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "54"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"36-oxqxRB/5h4tzDsWOqvV1ydIqWcI\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Dec 2025 08:37:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Password reset successful\",\n    \"success\": true\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbWpnNGRmczMwMDAwcHN4M2ozN3llM3pqIiwiZW1haWwiOiJkcm11c2ljcGlhbm9AZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NjYzNzEzNTgsImV4cCI6MTc2NjM3MjI1OH0.p1FIryob40uiUuztZrrbL8zR3JKcmAGEF-M-HBo-Uxo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"kayaks\",\r\n    \"meta\": {\r\n        // \"features\": [\"Life jackets\",  \"Waterproof storage bags (Optional)\"],\r\n        \"description\": \"Paddle at your own pace with our stable kayaks, accommodating either individual adventurers or pairs. With six kayaks readily available, you can embark on peaceful water exploration without delay. Perfect for serene lake journeys, coastal discovery, or bonding time on the water – whether you prefer solitary reflection or shared paddling adventures\"\r\n    },\r\n    \"capacity\": \"2 Passengers\",\r\n    \"availability\": 4,\r\n    \"category\": \"KAYAK\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lwc_dev_baseUrl}}/products/admin",
+							"host": [
+								"{{lwc_dev_baseUrl}}"
+							],
+							"path": [
+								"products",
+								"admin"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"kayaks\",\r\n    \"meta\": {\r\n        // \"features\": [\"Life jackets\",  \"Waterproof storage bags (Optional)\"],\r\n        \"description\": \"Paddle at your own pace with our stable kayaks, accommodating either individual adventurers or pairs. With six kayaks readily available, you can embark on peaceful water exploration without delay. Perfect for serene lake journeys, coastal discovery, or bonding time on the water – whether you prefer solitary reflection or shared paddling adventures\"\r\n    },\r\n    \"capacity\": \"2 Passengers\",\r\n    \"availability\": 4,\r\n    \"category\": \"KAYAK\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lwc_dev_baseUrl}}/products/admin",
+									"host": [
+										"{{lwc_dev_baseUrl}}"
+									],
+									"path": [
+										"products",
+										"admin"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "648"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"288-g2JPJIywcVa4sTJUaZ3CNwpFguU\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 29 Dec 2025 08:24:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Product created successfully\",\n    \"data\": {\n        \"id\": \"cmjqw6kj70002b4x3w10q6ikp\",\n        \"name\": \"kayaks\",\n        \"category\": \"KAYAK\",\n        \"meta\": {\n            \"description\": \"Paddle at your own pace with our stable kayaks, accommodating either individual adventurers or pairs. With six kayaks readily available, you can embark on peaceful water exploration without delay. Perfect for serene lake journeys, coastal discovery, or bonding time on the water – whether you prefer solitary reflection or shared paddling adventures\"\n        },\n        \"capacity\": \"2 Passengers\",\n        \"availability\": 4,\n        \"isActive\": true,\n        \"createdAt\": \"2025-12-29T08:24:09.331Z\",\n        \"updatedAt\": \"2025-12-29T08:24:09.331Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Add Pricing",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"duration\": \"1hr\",\r\n    \"price\": 250000,\r\n    \"capacity\": \"15 Seater\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lwc_dev_baseUrl}}/products/admin/:id/pricing",
+							"host": [
+								"{{lwc_dev_baseUrl}}"
+							],
+							"path": [
+								"products",
+								"admin",
+								":id",
+								"pricing"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3ecff5d7-6a48-4cf1-8044-acfdc294981c"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "response",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"duration\": 60, //in minutes\r\n    \"price\": 250000\r\n    // \"capacity\": \"15 Seater\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lwc_dev_baseUrl}}/products/admin/:id/pricing",
+									"host": [
+										"{{lwc_dev_baseUrl}}"
+									],
+									"path": [
+										"products",
+										"admin",
+										":id",
+										"pricing"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "cmjqw41zs0001b4x3l69eq2aa"
+										}
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "255"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ff-nE4P/suPYZzqxjMA4Une6QKoKNY\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 29 Dec 2025 08:37:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Pricing added successfully\",\n    \"data\": {\n        \"id\": \"c34fff4d-bc25-4081-973c-3a3de6419dce\",\n        \"productId\": \"cmjqw41zs0001b4x3l69eq2aa\",\n        \"duration\": 60,\n        \"price\": 250000,\n        \"createdAt\": \"2025-12-29T08:36:58.928Z\",\n        \"updatedAt\": \"2025-12-29T08:36:58.928Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"cmjqw6kj70002b4x3w10q6ikp\",\r\n    \"availability\": 6\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{lwc_dev_baseUrl}}/products/admin/:id",
+							"host": [
+								"{{lwc_dev_baseUrl}}"
+							],
+							"path": [
+								"products",
+								"admin",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "cmjqw6kj70002b4x3w10q6ikp"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "response",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"cmjqw6kj70002b4x3w10q6ikp\",\r\n    \"availability\": 6\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lwc_dev_baseUrl}}/products/admin/:id",
+									"host": [
+										"{{lwc_dev_baseUrl}}"
+									],
+									"path": [
+										"products",
+										"admin",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "cmjqw6kj70002b4x3w10q6ikp"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "648"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"288-yGja20D8+/d5vZD6d1ZDENsOFtg\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 29 Dec 2025 08:30:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Product updated successfully\",\n    \"data\": {\n        \"id\": \"cmjqw6kj70002b4x3w10q6ikp\",\n        \"name\": \"kayaks\",\n        \"category\": \"KAYAK\",\n        \"meta\": {\n            \"description\": \"Paddle at your own pace with our stable kayaks, accommodating either individual adventurers or pairs. With six kayaks readily available, you can embark on peaceful water exploration without delay. Perfect for serene lake journeys, coastal discovery, or bonding time on the water – whether you prefer solitary reflection or shared paddling adventures\"\n        },\n        \"capacity\": \"2 Passengers\",\n        \"availability\": 6,\n        \"isActive\": true,\n        \"createdAt\": \"2025-12-29T08:24:09.331Z\",\n        \"updatedAt\": \"2025-12-29T08:30:36.699Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get by ID",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"cmjqw6kj70002b4x3w10q6ikp\",\r\n    \"availability\": 6\r\n}"
+						},
+						"url": {
+							"raw": "{{lwc_dev_baseUrl}}/products/:id",
+							"host": [
+								"{{lwc_dev_baseUrl}}"
+							],
+							"path": [
+								"products",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "cmjqw41zs0001b4x3l69eq2aa"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"cmjqw6kj70002b4x3w10q6ikp\",\r\n    \"availability\": 6\r\n}"
+								},
+								"url": {
+									"raw": "{{lwc_dev_baseUrl}}/products/:id",
+									"host": [
+										"{{lwc_dev_baseUrl}}"
+									],
+									"path": [
+										"products",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "cmjqw41zs0001b4x3l69eq2aa"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1747"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"6d3-6mCEu2humM00EawoPJdWKegOOjA\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 29 Dec 2025 08:39:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Product retrieved successfully\",\n    \"data\": {\n        \"id\": \"cmjqw41zs0001b4x3l69eq2aa\",\n        \"name\": \"Jetski\",\n        \"category\": \"JETSKI\",\n        \"meta\": {\n            \"features\": [\n                \"Life jackets\",\n                \"Waterproof storage bags (Optional)\"\n            ],\n            \"description\": \"Experience adrenaline-fueled fun on the water with our personal jet skis, perfect for duos. With four units readily available, you can hit the waves without long waits. Each ride comes equipped with essential life jackets for safety and optional waterproof storage bags to keep your belongings dry while you carve through the surf. Ideal for couples or friends seeking exciting aquatic adventures.\"\n        },\n        \"capacity\": \"2 Passengers\",\n        \"availability\": 4,\n        \"isActive\": true,\n        \"createdAt\": \"2025-12-29T08:22:11.992Z\",\n        \"updatedAt\": \"2025-12-29T08:22:11.992Z\",\n        \"pricing\": [\n            {\n                \"id\": \"53adeb28-2503-4be7-9142-731bec392ec8\",\n                \"productId\": \"cmjqw41zs0001b4x3l69eq2aa\",\n                \"duration\": 5,\n                \"price\": 20000,\n                \"createdAt\": \"2025-12-29T08:35:58.813Z\",\n                \"updatedAt\": \"2025-12-29T08:35:58.813Z\"\n            },\n            {\n                \"id\": \"de25b570-f29b-441b-9ee3-f2d2352d55d0\",\n                \"productId\": \"cmjqw41zs0001b4x3l69eq2aa\",\n                \"duration\": 10,\n                \"price\": 35000,\n                \"createdAt\": \"2025-12-29T08:36:17.370Z\",\n                \"updatedAt\": \"2025-12-29T08:36:17.370Z\"\n            },\n            {\n                \"id\": \"3e35f9d9-870a-4085-a63f-14ce0a75fb26\",\n                \"productId\": \"cmjqw41zs0001b4x3l69eq2aa\",\n                \"duration\": 15,\n                \"price\": 75000,\n                \"createdAt\": \"2025-12-29T08:36:31.985Z\",\n                \"updatedAt\": \"2025-12-29T08:36:31.985Z\"\n            },\n            {\n                \"id\": \"e40d00c4-4f3b-4e47-a851-c51ec6e582d0\",\n                \"productId\": \"cmjqw41zs0001b4x3l69eq2aa\",\n                \"duration\": 30,\n                \"price\": 130000,\n                \"createdAt\": \"2025-12-29T08:36:41.553Z\",\n                \"updatedAt\": \"2025-12-29T08:36:41.553Z\"\n            },\n            {\n                \"id\": \"c34fff4d-bc25-4081-973c-3a3de6419dce\",\n                \"productId\": \"cmjqw41zs0001b4x3l69eq2aa\",\n                \"duration\": 60,\n                \"price\": 250000,\n                \"createdAt\": \"2025-12-29T08:36:58.928Z\",\n                \"updatedAt\": \"2025-12-29T08:36:58.928Z\"\n            }\n        ],\n        \"images\": []\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "GET All",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"cmjqw6kj70002b4x3w10q6ikp\",\r\n    \"availability\": 6\r\n}"
+						},
+						"url": {
+							"raw": "{{lwc_dev_baseUrl}}/products",
+							"host": [
+								"{{lwc_dev_baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "response",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": \"cmjqw6kj70002b4x3w10q6ikp\",\r\n    \"availability\": 6\r\n}"
+								},
+								"url": {
+									"raw": "{{lwc_dev_baseUrl}}/products",
+									"host": [
+										"{{lwc_dev_baseUrl}}"
+									],
+									"path": [
+										"products"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2668"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a6c-NuqucN3wpUfB2RoLe0mLELhXF8A\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 29 Dec 2025 08:40:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Products retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": \"cmjqvzlfj0000b4x3tjiv3t7y\",\n            \"name\": \"Nneka\",\n            \"category\": \"BOAT\",\n            \"meta\": {\n                \"features\": [\n                    \"Luxury seating\",\n                    \"Built-in audio system\",\n                    \"Shaded canopy\"\n                ]\n            },\n            \"capacity\": \"6 Passengers\",\n            \"availability\": 1,\n            \"isActive\": true,\n            \"createdAt\": \"2025-12-29T08:18:43.903Z\",\n            \"updatedAt\": \"2025-12-29T08:18:43.903Z\",\n            \"pricing\": [],\n            \"images\": []\n        },\n        {\n            \"id\": \"cmjqw41zs0001b4x3l69eq2aa\",\n            \"name\": \"Jetski\",\n            \"category\": \"JETSKI\",\n            \"meta\": {\n                \"features\": [\n                    \"Life jackets\",\n                    \"Waterproof storage bags (Optional)\"\n                ],\n                \"description\": \"Experience adrenaline-fueled fun on the water with our personal jet skis, perfect for duos. With four units readily available, you can hit the waves without long waits. Each ride comes equipped with essential life jackets for safety and optional waterproof storage bags to keep your belongings dry while you carve through the surf. Ideal for couples or friends seeking exciting aquatic adventures.\"\n            },\n            \"capacity\": \"2 Passengers\",\n            \"availability\": 4,\n            \"isActive\": true,\n            \"createdAt\": \"2025-12-29T08:22:11.992Z\",\n            \"updatedAt\": \"2025-12-29T08:22:11.992Z\",\n            \"pricing\": [\n                {\n                    \"id\": \"53adeb28-2503-4be7-9142-731bec392ec8\",\n                    \"productId\": \"cmjqw41zs0001b4x3l69eq2aa\",\n                    \"duration\": 5,\n                    \"price\": 20000,\n                    \"createdAt\": \"2025-12-29T08:35:58.813Z\",\n                    \"updatedAt\": \"2025-12-29T08:35:58.813Z\"\n                },\n                {\n                    \"id\": \"de25b570-f29b-441b-9ee3-f2d2352d55d0\",\n                    \"productId\": \"cmjqw41zs0001b4x3l69eq2aa\",\n                    \"duration\": 10,\n                    \"price\": 35000,\n                    \"createdAt\": \"2025-12-29T08:36:17.370Z\",\n                    \"updatedAt\": \"2025-12-29T08:36:17.370Z\"\n                },\n                {\n                    \"id\": \"3e35f9d9-870a-4085-a63f-14ce0a75fb26\",\n                    \"productId\": \"cmjqw41zs0001b4x3l69eq2aa\",\n                    \"duration\": 15,\n                    \"price\": 75000,\n                    \"createdAt\": \"2025-12-29T08:36:31.985Z\",\n                    \"updatedAt\": \"2025-12-29T08:36:31.985Z\"\n                },\n                {\n                    \"id\": \"e40d00c4-4f3b-4e47-a851-c51ec6e582d0\",\n                    \"productId\": \"cmjqw41zs0001b4x3l69eq2aa\",\n                    \"duration\": 30,\n                    \"price\": 130000,\n                    \"createdAt\": \"2025-12-29T08:36:41.553Z\",\n                    \"updatedAt\": \"2025-12-29T08:36:41.553Z\"\n                },\n                {\n                    \"id\": \"c34fff4d-bc25-4081-973c-3a3de6419dce\",\n                    \"productId\": \"cmjqw41zs0001b4x3l69eq2aa\",\n                    \"duration\": 60,\n                    \"price\": 250000,\n                    \"createdAt\": \"2025-12-29T08:36:58.928Z\",\n                    \"updatedAt\": \"2025-12-29T08:36:58.928Z\"\n                }\n            ],\n            \"images\": []\n        },\n        {\n            \"id\": \"cmjqw6kj70002b4x3w10q6ikp\",\n            \"name\": \"kayaks\",\n            \"category\": \"KAYAK\",\n            \"meta\": {\n                \"description\": \"Paddle at your own pace with our stable kayaks, accommodating either individual adventurers or pairs. With six kayaks readily available, you can embark on peaceful water exploration without delay. Perfect for serene lake journeys, coastal discovery, or bonding time on the water – whether you prefer solitary reflection or shared paddling adventures\"\n            },\n            \"capacity\": \"2 Passengers\",\n            \"availability\": 6,\n            \"isActive\": true,\n            \"createdAt\": \"2025-12-29T08:24:09.331Z\",\n            \"updatedAt\": \"2025-12-29T08:30:36.699Z\",\n            \"pricing\": [],\n            \"images\": []\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbWpnNGRmczMwMDAwcHN4M2ozN3llM3pqIiwiZW1haWwiOiJkcm11c2ljcGlhbm9AZ21haWwuY29tIiwicm9sZSI6IlVTRVIiLCJpYXQiOjE3NjYzNzEzNTgsImV4cCI6MTc2NjM3MjI1OH0.p1FIryob40uiUuztZrrbL8zR3JKcmAGEF-M-HBo-Uxo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "title",
+									"value": "Fishing",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Join fellow anglers for a competitive fishing experience! Hosted on the 1st and 3rd Saturday of each month at ₦65,000, this event offers a full day of deep-sea or lagoon fishing with professional gear, guidance, and prize opportunities—ideal for both seasoned and beginner fishers.",
+									"type": "text"
+								},
+								{
+									"key": "eventType",
+									"value": "RECURRING",
+									"type": "text"
+								},
+								{
+									"key": "price",
+									"value": "65000",
+									"type": "text"
+								},
+								{
+									"key": "isActive",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "eventImg",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/drMuzik/Pictures/dm.png"
+								},
+								{
+									"key": "dto",
+									"value": "\"{\n    \"title\": \"Fishing\",\n    \"description\": \"Join fellow anglers for a competitive fishing experience! Hosted on the 1st and 3rd Saturday of each month at ₦65,000, this event offers a full day of deep-sea or lagoon fishing with professional gear, guidance, and prize opportunities—ideal for both seasoned and beginner fishers.\",\n    \"price\": 65000,\n    \"eventType\": \"RECURRING\", //RECURRING, SEASONAL\n    \"isActive\": true,\n    \"eventImg\": \"\",\n    \"recurrenceRule\": \"1st, 3rd Saturday\"\n}\"",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "recurrenceRule",
+									"value": "1st, 3rd Saturday",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{lwc_dev_baseUrl}}/events/admin/",
+							"host": [
+								"{{lwc_dev_baseUrl}}"
+							],
+							"path": [
+								"events",
+								"admin",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "title",
+											"value": "Fishing",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Join fellow anglers for a competitive fishing experience! Hosted on the 1st and 3rd Saturday of each month at ₦65,000, this event offers a full day of deep-sea or lagoon fishing with professional gear, guidance, and prize opportunities—ideal for both seasoned and beginner fishers.",
+											"type": "text"
+										},
+										{
+											"key": "eventType",
+											"value": "RECURRING",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "65000",
+											"type": "text"
+										},
+										{
+											"key": "isActive",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "eventImg",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/drMuzik/Pictures/dm.png"
+										},
+										{
+											"key": "dto",
+											"value": "\"{\n    \"title\": \"Fishing\",\n    \"description\": \"Join fellow anglers for a competitive fishing experience! Hosted on the 1st and 3rd Saturday of each month at ₦65,000, this event offers a full day of deep-sea or lagoon fishing with professional gear, guidance, and prize opportunities—ideal for both seasoned and beginner fishers.\",\n    \"price\": 65000,\n    \"eventType\": \"RECURRING\", //RECURRING, SEASONAL\n    \"isActive\": true,\n    \"eventImg\": \"\",\n    \"recurrenceRule\": \"1st, 3rd Saturday\"\n}\"",
+											"type": "text",
+											"disabled": true
+										},
+										{
+											"key": "recurrenceRule",
+											"value": "1st, 3rd Saturday",
+											"type": "text"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{lwc_dev_baseUrl}}/events/admin/",
+									"host": [
+										"{{lwc_dev_baseUrl}}"
+									],
+									"path": [
+										"events",
+										"admin",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Access-Control-Allow-Credentials",
+									"value": "true"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "722"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2d2-c/4oK5Lym/azx08ioLC/Zj6ri7k\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 30 Dec 2025 06:54:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Created Event successfully\",\n    \"data\": {\n        \"id\": \"cmjs8etnf0000isx3ac7vw233\",\n        \"title\": \"Fishing\",\n        \"description\": \"Join fellow anglers for a competitive fishing experience! Hosted on the 1st and 3rd Saturday of each month at ₦65,000, this event offers a full day of deep-sea or lagoon fishing with professional gear, guidance, and prize opportunities—ideal for both seasoned and beginner fishers.\",\n        \"address\": null,\n        \"capacity\": null,\n        \"price\": 65000,\n        \"eventType\": \"RECURRING\",\n        \"eventImg\": \"https://res.cloudinary.com/donlini/image/upload/v1767077655/lwc/img/uploads/file_opyy5z.png\",\n        \"recurrenceRule\": \"1st, 3rd Saturady\",\n        \"isActive\": true,\n        \"createdAt\": \"2025-12-30T06:54:15.963Z\",\n        \"updatedAt\": \"2025-12-30T06:54:15.963Z\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

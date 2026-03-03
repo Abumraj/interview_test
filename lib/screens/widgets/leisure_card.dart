@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:interview/const.dart';
 import 'package:interview/models/leisure.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:interview/utils/custom_styles.dart';
 
 class LeisureCard extends StatelessWidget {
   final Leisure leisure;
@@ -10,46 +13,62 @@ class LeisureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 240,
+      // height: 210.h,
       decoration: BoxDecoration(
         color: AppColors.subCardcolor,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(8.r),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.vertical(
-                top: Radius.circular(16),
-              ),
-              child: Image.network(
-                leisure.image,
-                height: 150,
-                width: double.infinity,
-                fit: BoxFit.cover,
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(8.r),
+              child: ClipRRect(
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(8.r),
+                  bottom: Radius.circular(8.r),
+                ),
+                child: CachedNetworkImage(
+                  imageUrl: leisure.image,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                  placeholder:
+                      (context, url) => Container(
+                        width: double.infinity,
+                        color: AppColors.subcolor,
+                      ),
+                  errorWidget:
+                      (context, url, error) => Container(
+                        width: double.infinity,
+                        color: AppColors.subcolor,
+                      ),
+                ),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.fromLTRB(8.w, 0, 8.w, 10.h),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   leisure.title,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-
-                    fontWeight: FontWeight.w600,
+                  style: CustomTextStyle.headlineSmall.copyWith(
+                    color: AppColors.whiteColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14.sp,
                   ),
                 ),
-                const SizedBox(height: 6),
+                SizedBox(height: 4.h),
                 Text(
                   leisure.price,
-                  style: const TextStyle(color: Colors.white70, fontSize: 15),
+                  style: CustomTextStyle.bodyMedium.copyWith(
+                    fontSize: 12.sp,
+                    color: AppColors.whiteColor,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ],
             ),

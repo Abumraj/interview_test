@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "462361779692",
+    "project_id": "lwc-mobile-de682",
+    "storage_bucket": "lwc-mobile-de682.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462361779692:android:24a3a9404f98364f47b4c9",
+        "android_client_info": {
+          "package_name": "com.example.lwc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462361779692-qri5d0f3kupanubgtt7vdvneip3c6016.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEQiCghpOLB3s47lUQ1jjhFy4O3JL1kpM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462361779692-qri5d0f3kupanubgtt7vdvneip3c6016.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "462361779692-ebdjiav4kmejkhl5g4i79p8qvgvrvbbe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.purplegate.lwc"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462361779692:android:221061f3ee05bf2447b4c9",
+        "android_client_info": {
+          "package_name": "com.purplegate.lwc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462361779692-18b60re2pgj5p5vjqae801i1h5pahlrb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.purplegate.lwc",
+            "certificate_hash": "105c666dc94930cd1c78b074f178315e84eaed4b"
+          }
+        },
+        {
+          "client_id": "462361779692-r7ndm0b2hdisa6614sebad1gch63ucld.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.purplegate.lwc",
+            "certificate_hash": "ee5111da7b91979073b7bf41ab9ce732aa815305"
+          }
+        },
+        {
+          "client_id": "462361779692-qri5d0f3kupanubgtt7vdvneip3c6016.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEQiCghpOLB3s47lUQ1jjhFy4O3JL1kpM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462361779692-qri5d0f3kupanubgtt7vdvneip3c6016.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "462361779692-ebdjiav4kmejkhl5g4i79p8qvgvrvbbe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.purplegate.lwc"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
