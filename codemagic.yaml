@@ -1,0 +1,59 @@
+workflows:
+  ios-app-store:
+    name: iOS App Store (IPA)
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
+
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+
+      vars:
+        # Update this to your real bundle id (also must match Xcode project settings)
+        BUNDLE_ID: com.example.lwc
+
+    scripts:
+      - name: Flutter pub get
+        script: flutter pub get
+
+      - name: Flutter build ipa
+        script: |
+          flutter --version
+          flutter build ipa \
+            --release \
+            --build-name="$CM_BUILD_NAME" \
+            --build-number="$CM_BUILD_NUMBER"
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+
+    publishing:
+      app_store_connect:
+        # Configure the App Store Connect integration in Codemagic UI.
+        auth: integration
+
+        # Upload to App Store Connect (TestFlight). You can then submit for review in App Store Connect.
+        submit_to_testflight: true
+        submit_to_app_store: false
+
+        # Optional (recommended): specify what to do with the build after uploading
+        beta_groups:
+          - Internal Testers
+
+      email:
+        recipients:
+          - your-team@example.com
+        notify:
+          success: true
+          failure: true
