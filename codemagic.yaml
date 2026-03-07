@@ -19,7 +19,7 @@ workflows:
 
       vars:
         # Update this to your real bundle id (also must match Xcode project settings)
-        BUNDLE_ID: com.example.lwc
+        BUNDLE_ID: com.purplegate.lwc
 
     scripts:
       - name: Flutter pub get
