@@ -37,7 +37,7 @@ class AuthApi {
 
   Future<Map<String, dynamic>> googleLogin({required String token}) {
     return _client.post<Map<String, dynamic>>(
-      '/auth/google',
+      '/auth/firebase-login',
       data: <String, dynamic>{'token': token},
     );
   }
