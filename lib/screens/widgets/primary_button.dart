@@ -56,6 +56,7 @@ class CustomButton extends StatelessWidget {
   final double? borderRadius;
   final Color? textColor;
   final String buttonText;
+  final Widget? leading;
   final Color? borderColor;
   final double? width;
   final double? height;
@@ -70,6 +71,7 @@ class CustomButton extends StatelessWidget {
     this.textColor,
     this.borderColor,
     required this.buttonText,
+    this.leading,
     this.height,
     this.width,
     this.textfontSize,
@@ -80,6 +82,7 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final effectiveOnTap = isLoading == true ? null : onTap;
     return Container(
       key: globalkey,
       width: width ?? double.infinity,
@@ -92,17 +95,27 @@ class CustomButton extends StatelessWidget {
       child: Material(
         color: Colors.transparent,
         child: InkWell(
-          onTap: onTap,
+          onTap: effectiveOnTap,
           child: Center(
             child:
                 isLoading == true
                     ? SpinKitFadingCircle(size: 30, color: AppColors.whiteColor)
-                    : Text(
-                      buttonText,
-                      style: CustomTextStyle.button.copyWith(
-                        color: textColor ?? AppColors.whiteColor,
-                        fontSize: textfontSize ?? 16.sp,
-                      ),
+                    : Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (leading != null) ...[
+                          leading!,
+                          SizedBox(width: 10.w),
+                        ],
+                        Text(
+                          buttonText,
+                          style: CustomTextStyle.button.copyWith(
+                            color: textColor ?? AppColors.whiteColor,
+                            fontSize: textfontSize ?? 16.sp,
+                          ),
+                        ),
+                      ],
                     ),
           ),
         ),

@@ -63,7 +63,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '462361779692',
     projectId: 'lwc-mobile-de682',
     storageBucket: 'lwc-mobile-de682.firebasestorage.app',
-    iosBundleId: 'com.example.lwc',
+    iosBundleId: 'com.purplegate.lwc',
   );
-
 }
