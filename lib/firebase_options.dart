@@ -59,7 +59,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyB7iuLHi8rjJpZEfOsXYEt7sdTknKySH-s',
-    appId: '1:462361779692:ios:07a43c0f3e68557f47b4c9',
+    appId: '1:462361779692:ios:e1f1fde3ae49f95a47b4c9',
     messagingSenderId: '462361779692',
     projectId: 'lwc-mobile-de682',
     storageBucket: 'lwc-mobile-de682.firebasestorage.app',
