@@ -32,16 +32,16 @@ class LeisureCard extends StatelessWidget {
                 child: CachedNetworkImage(
                   imageUrl: leisure.image,
                   width: double.infinity,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                   placeholder:
                       (context, url) => Container(
                         width: double.infinity,
-                        color: AppColors.subcolor,
+                        color: AppColors.backgroundColor,
                       ),
                   errorWidget:
                       (context, url, error) => Container(
                         width: double.infinity,
-                        color: AppColors.subcolor,
+                        color: AppColors.backgroundColor,
                       ),
                 ),
               ),

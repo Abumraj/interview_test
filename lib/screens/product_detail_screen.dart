@@ -714,16 +714,15 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   }
 
   Widget _headerImage(String imageUrl) {
-    return SizedBox(
-      height: 360,
+    return CachedNetworkImage(
+      imageUrl: imageUrl,
+      fit: BoxFit.fill,
+
+      height: 340.h,
       width: double.infinity,
-      child: CachedNetworkImage(
-        imageUrl: imageUrl,
-        fit: BoxFit.cover,
-        placeholder: (context, url) => Container(color: AppColors.subcolor),
-        errorWidget:
-            (context, url, error) => Container(color: AppColors.subcolor),
-      ),
+      placeholder: (context, url) => Container(color: AppColors.subcolor),
+      errorWidget:
+          (context, url, error) => Container(color: AppColors.subcolor),
     );
   }
 
