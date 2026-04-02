@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:interview/const.dart';
 import 'package:interview/features/profile/presentation/profile_controller.dart';
 import 'package:interview/features/bookings/presentation/bookings_controller.dart';
+import 'package:interview/features/bookings/domain/booked_item.dart';
 import 'package:interview/features/cart/presentation/cart_controller.dart';
 import 'package:interview/features/history/presentation/history_controller.dart';
 import 'package:interview/features/payments/presentation/payments_controller.dart';
@@ -99,189 +100,78 @@ class _OrderBagScreenState extends ConsumerState<OrderBagScreen> {
 
             // Order items list
             Expanded(
-              child: itemsAsync.when(
-                loading:
-                    () => Center(
-                      child: SpinKitFadingCircle(
-                        size: 30,
-                        color: AppColors.whiteColor,
-                      ),
-                    ),
-                error:
-                    (_, __) => Center(
-                      child: TextButton(
-                        onPressed: () {
-                          ref.invalidate(cartItemsProvider);
-                        },
-                        child: const Text('Retry'),
-                      ),
-                    ),
-                data: (items) {
-                  if (items.isEmpty) {
-                    final current = ref.read(cartCountProvider);
-                    if (current != 0) {
-                      Future.microtask(() {
-                        ref.read(cartCountProvider.notifier).state = 0;
-                      });
-                    }
-                    return const Center(child: Text('Your bag is empty'));
-                  }
+              child: Builder(
+                builder: (context) {
+                  final cachedItems = itemsAsync.valueOrNull;
 
-                  final count = items.fold<int>(
-                    0,
-                    (sum, item) => sum + (item.quantity ?? 1),
-                  );
-                  final current = ref.read(cartCountProvider);
-                  if (current != count) {
-                    Future.microtask(() {
-                      ref.read(cartCountProvider.notifier).state = count;
-                    });
-                  }
-
-                  return RefreshIndicator(
-                    onRefresh: () async {
-                      ref.invalidate(cartItemsProvider);
-                    },
-                    child: ListView.separated(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 220.h),
-                      itemCount: items.length,
-                      separatorBuilder:
-                          (_, __) => Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 24),
-                            child: const Divider(
-                              color: Color(0xFF1A4A63),
-                              height: 56,
-                              thickness: 1,
+                  Widget content;
+                  if (itemsAsync.isLoading && cachedItems != null) {
+                    content = _CartItemsList(
+                      items: cachedItems,
+                      cartAsync: cartAsync,
+                      ref: ref,
+                      onRefresh: () async {
+                        ref.invalidate(cartItemsProvider);
+                      },
+                      onEditDone: () {
+                        ref.invalidate(cartItemsProvider);
+                      },
+                    );
+                  } else {
+                    content = itemsAsync.when(
+                      loading:
+                          () => Center(
+                            child: SpinKitFadingCircle(
+                              size: 30,
+                              color: AppColors.whiteColor,
                             ),
                           ),
-                      itemBuilder: (_, i) {
-                        final item = items[i];
-                        final qty = item.quantity ?? 1;
-                        final amount = item.amount ?? ((item.price ?? 0) * qty);
-                        final available = item.isAvailable ?? true;
-
-                        String durationLabel(int? minutes) {
-                          if (minutes == null || minutes <= 0) return '—';
-                          if (minutes >= 60 && minutes % 60 == 0) {
-                            final h = minutes ~/ 60;
-                            return '${h}hrs';
-                          }
-                          return '${minutes} mins';
-                        }
-
-                        String timeSlotLabel(DateTime? dt) {
-                          if (dt == null) return '';
-                          final local = dt.toLocal();
-                          return DateFormat('hh:mm a  |  dd MMM').format(local);
-                        }
-
-                        final option1 =
-                            (item.variantType ?? '').trim().isNotEmpty
-                                ? item.variantType!.toString()
-                                : (qty > 1 ? '$qty People' : 'Solo');
-                        final option2 = durationLabel(item.duration);
-
-                        final img = (item.imageUrl ?? '').trim();
-
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 8,
+                      error:
+                          (_, __) => Center(
+                            child: TextButton(
+                              onPressed: () {
+                                ref.invalidate(cartItemsProvider);
+                              },
+                              child: const Text('Retry'),
+                            ),
                           ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              OrderItemCard(
-                                imageUrl: img,
-                                title: item.name,
-                                option1: option1,
-                                option2: option2,
-                                option1List: <String>[option1],
-                                option2List: <String>[option2],
-                                price: MoneyFormatter.ngn(amount),
-                                onEdit: () {
-                                  final productId = item.productId ?? '';
-                                  if (productId.isEmpty) return;
-                                  Navigator.of(context)
-                                      .push(
-                                        SlideUpRoute(
-                                          page: ProductDetailScreen(
-                                            productId: productId,
-                                            editingBagItemId: item.id,
-                                            editingPricingId: item.pricingId,
-                                            editingDuration: item.duration,
-                                            editingStartTime: item.date,
-                                            editingMeta: item.meta,
-                                            editingCategory: item.category,
-                                          ),
-                                        ),
-                                      )
-                                      .then((_) {
-                                        ref.invalidate(cartItemsProvider);
-                                      });
-                                },
-                                onRemove: () async {
-                                  if (cartAsync.isLoading) return;
-                                  if (item.id.isEmpty) return;
-                                  try {
-                                    await ref
-                                        .read(cartControllerProvider.notifier)
-                                        .removeItem(bagItemId: item.id);
-                                    ToastHelper.showSuccess('Removed from bag');
-                                  } catch (e) {
-                                    ToastHelper.showError(e.toString());
-                                  }
-                                },
-                              ),
-                              if (item.date != null)
-                                Padding(
-                                  padding: EdgeInsets.only(top: 6.h),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.access_time,
-                                        color: Colors.white54,
-                                        size: 14.sp,
-                                      ),
-                                      SizedBox(width: 4.w),
-                                      Text(
-                                        timeSlotLabel(item.date),
-                                        style: TextStyle(
-                                          color: Colors.white70,
-                                          fontSize: 12.sp,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              if (!available)
-                                Padding(
-                                  padding: EdgeInsets.only(top: 4.h),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.warning_amber_rounded,
-                                        color: AppColors.error,
-                                        size: 14.sp,
-                                      ),
-                                      SizedBox(width: 4.w),
-                                      Text(
-                                        'This timeslot is no longer available',
-                                        style: TextStyle(
-                                          color: AppColors.error,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                            ],
-                          ),
+                      data: (items) {
+                        return _CartItemsList(
+                          items: items,
+                          cartAsync: cartAsync,
+                          ref: ref,
+                          onRefresh: () async {
+                            ref.invalidate(cartItemsProvider);
+                          },
+                          onEditDone: () {
+                            ref.invalidate(cartItemsProvider);
+                          },
                         );
                       },
-                    ),
+                    );
+                  }
+
+                  if (!(itemsAsync.isLoading && cachedItems != null)) {
+                    return content;
+                  }
+
+                  return Stack(
+                    children: [
+                      content,
+                      Positioned.fill(
+                        child: AbsorbPointer(
+                          absorbing: true,
+                          child: Container(
+                            alignment: Alignment.center,
+                            color: Colors.black.withOpacity(0.15),
+                            child: SpinKitFadingCircle(
+                              size: 30,
+                              color: AppColors.whiteColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   );
                 },
               ),
@@ -451,6 +341,184 @@ class _OrderBagScreenState extends ConsumerState<OrderBagScreen> {
                   ),
                 ],
               ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _CartItemsList extends StatelessWidget {
+  final List<BookedItem> items;
+  final AsyncValue<void> cartAsync;
+  final WidgetRef ref;
+  final Future<void> Function() onRefresh;
+  final VoidCallback onEditDone;
+
+  const _CartItemsList({
+    required this.items,
+    required this.cartAsync,
+    required this.ref,
+    required this.onRefresh,
+    required this.onEditDone,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (items.isEmpty) {
+      final current = ref.read(cartCountProvider);
+      if (current != 0) {
+        Future.microtask(() {
+          ref.read(cartCountProvider.notifier).state = 0;
+        });
+      }
+      return const Center(child: Text('Your bag is empty'));
+    }
+
+    final count = items.fold<int>(0, (sum, item) => sum + (item.quantity ?? 1));
+    final current = ref.read(cartCountProvider);
+    if (current != count) {
+      Future.microtask(() {
+        ref.read(cartCountProvider.notifier).state = count;
+      });
+    }
+
+    String durationLabel(int? minutes) {
+      if (minutes == null || minutes <= 0) return '—';
+      if (minutes >= 60 && minutes % 60 == 0) {
+        final h = minutes ~/ 60;
+        return '${h}hrs';
+      }
+      return '${minutes} mins';
+    }
+
+    String timeSlotLabel(DateTime? dt) {
+      if (dt == null) return '';
+      final local = dt.toLocal();
+      return DateFormat('hh:mm a  |  dd MMM').format(local);
+    }
+
+    return RefreshIndicator(
+      onRefresh: onRefresh,
+      child: ListView.separated(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 220.h),
+        itemCount: items.length,
+        separatorBuilder:
+            (_, __) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: const Divider(
+                color: Color(0xFF1A4A63),
+                height: 56,
+                thickness: 1,
+              ),
+            ),
+        itemBuilder: (_, i) {
+          final item = items[i];
+          final qty = item.quantity ?? 1;
+          final amount = item.amount ?? ((item.price ?? 0) * qty);
+          final available = item.isAvailable ?? true;
+
+          final option1 =
+              (item.variantType ?? '').trim().isNotEmpty
+                  ? item.variantType!.toString()
+                  : (qty > 1 ? '$qty People' : 'Solo');
+          final option2 = durationLabel(item.duration);
+
+          final img = (item.imageUrl ?? '').trim();
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                OrderItemCard(
+                  imageUrl: img,
+                  title: item.name,
+                  option1: option1,
+                  option2: option2,
+                  option1List: <String>[option1],
+                  option2List: <String>[option2],
+                  price: MoneyFormatter.ngn(amount),
+                  onEdit: () {
+                    final productId = item.productId ?? '';
+                    if (productId.isEmpty) return;
+                    Navigator.of(context)
+                        .push(
+                          SlideUpRoute(
+                            page: ProductDetailScreen(
+                              productId: productId,
+                              editingBagItemId: item.id,
+                              editingPricingId: item.pricingId,
+                              editingDuration: item.duration,
+                              editingStartTime: item.date,
+                              editingMeta: item.meta,
+                              editingCategory: item.category,
+                            ),
+                          ),
+                        )
+                        .then((_) {
+                          onEditDone();
+                        });
+                  },
+                  onRemove: () async {
+                    if (cartAsync.isLoading) return;
+                    if (item.id.isEmpty) return;
+                    try {
+                      await ref
+                          .read(cartControllerProvider.notifier)
+                          .removeItem(bagItemId: item.id);
+                      ToastHelper.showSuccess('Removed from bag');
+                    } catch (e) {
+                      ToastHelper.showError(e.toString());
+                    }
+                  },
+                ),
+                if (item.date != null)
+                  Padding(
+                    padding: EdgeInsets.only(top: 6.h),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.access_time,
+                          color: Colors.white54,
+                          size: 14.sp,
+                        ),
+                        SizedBox(width: 4.w),
+                        Text(
+                          timeSlotLabel(item.date),
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontSize: 12.sp,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                if (!available)
+                  Padding(
+                    padding: EdgeInsets.only(top: 4.h),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.warning_amber_rounded,
+                          color: AppColors.error,
+                          size: 14.sp,
+                        ),
+                        SizedBox(width: 4.w),
+                        Text(
+                          'This timeslot is no longer available',
+                          style: TextStyle(
+                            color: AppColors.error,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
             ),
           );
         },

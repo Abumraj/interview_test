@@ -32,7 +32,7 @@ class LeisureCard extends StatelessWidget {
                 child: CachedNetworkImage(
                   imageUrl: leisure.image,
                   width: double.infinity,
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                   placeholder:
                       (context, url) => Container(
                         width: double.infinity,

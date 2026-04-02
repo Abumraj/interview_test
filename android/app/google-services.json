@@ -58,6 +58,14 @@
           }
         },
         {
+          "client_id": "462361779692-lh4k2ignn768dkpsnqoem8rdcv56clr6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.purplegate.lwc",
+            "certificate_hash": "bebcbd984a187687a9215df88e6f7fc69045a844"
+          }
+        },
+        {
           "client_id": "462361779692-r7ndm0b2hdisa6614sebad1gch63ucld.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

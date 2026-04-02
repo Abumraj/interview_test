@@ -49,9 +49,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 Bounce(
                   duration: const Duration(milliseconds: 2200),
 
-                  child: Image.asset("assets/images/logo.png"),
+                  child: Image.asset(
+                    "assets/images/logo2.png",
+                    width: 144,
+                    height: 144,
+                  ),
                 ),
                 height20,
+
                 // _isVisible
                 //     ?
                 SlideInLeft(

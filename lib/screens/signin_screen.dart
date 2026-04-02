@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:animate_do/animate_do.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:interview/const.dart';
 import 'package:interview/core/network/api_exceptions.dart';
@@ -89,9 +91,25 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
       Navigator.of(
         context,
       ).pushReplacement(FadeScaleRoute(page: const Dashboard()));
+    } on PlatformException catch (e) {
+      if (kDebugMode) {
+        debugPrint(
+          'Google Sign-In PlatformException: ${e.code} ${e.message} ${e.details}',
+        );
+      }
+      ToastHelper.showError('An error occurred. Please try again.');
+    } on FirebaseAuthException catch (e) {
+      if (kDebugMode) {
+        debugPrint(
+          'Google Sign-In FirebaseAuthException: ${e.code} ${e.message}',
+        );
+      }
+      ToastHelper.showError('An error occurred. Please try again.');
     } catch (e) {
-      final msg = e is ApiException ? e.message : e.toString();
-      ToastHelper.showError(msg);
+      if (kDebugMode) {
+        debugPrint('Google Sign-In error: $e');
+      }
+      ToastHelper.showError('An error occurred. Please try again.');
     } finally {
       if (!mounted) return;
       setState(() {
@@ -110,7 +128,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
           // Bottom image (darker one)
           Positioned.fill(
             bottom: MediaQuery.of(context).size.height / 2.5,
-            child: Image.asset('assets/images/yacht.png', fit: BoxFit.cover),
+            child: Image.asset('assets/images/yacht1.png', fit: BoxFit.cover),
           ),
           Positioned.fill(
             top: MediaQuery.of(context).size.height / 2.5,

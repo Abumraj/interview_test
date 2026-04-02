@@ -90,7 +90,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
             //   },
             // ),
             child: Image.asset(
-              'assets/images/beech.png',
+              'assets/images/beech1.png',
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
                 return Container(color: const Color(0xFF4A9B9B));

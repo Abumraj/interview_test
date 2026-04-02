@@ -37,7 +37,7 @@ class DashboardHeader extends ConsumerWidget {
                 child: CircleAvatar(
                   radius: 22,
                   backgroundImage: CachedNetworkImageProvider(
-                    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+                    'https://www.w3schools.com/howto/img_avatar.png',
                   ),
                 ),
               ),
