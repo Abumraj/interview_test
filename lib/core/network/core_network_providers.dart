@@ -34,6 +34,12 @@ final apiClientProvider = Provider<ApiClient>((ref) {
     saveAccessToken: tokenStorage.writeAccessToken,
     saveRefreshToken: tokenStorage.writeRefreshToken,
     onUnauthorized: () async {
+      final accessToken = await tokenStorage.readAccessToken();
+      final refreshToken = await tokenStorage.readRefreshToken();
+      final hadSession =
+          (accessToken != null && accessToken.isNotEmpty) ||
+          (refreshToken != null && refreshToken.isNotEmpty);
+
       try {
         await FirebaseMessaging.instance.deleteToken();
       } catch (e) {
@@ -41,7 +47,9 @@ final apiClientProvider = Provider<ApiClient>((ref) {
       }
       await tokenStorage.clear();
       await cacheManager.clearAll();
-      ref.read(unauthorizedEventProvider.notifier).state++;
+      if (hadSession) {
+        ref.read(unauthorizedEventProvider.notifier).state++;
+      }
     },
     logger: ref.watch(networkLoggerProvider),
   );

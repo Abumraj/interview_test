@@ -37,7 +37,7 @@ class ProfileController extends AsyncNotifier<AuthUser?> {
     required String firstName,
     required String lastName,
     required String email,
-    required String phoneNumber,
+    String? phoneNumber,
   }) async {
     state = const AsyncLoading<AuthUser?>().copyWithPrevious(state);
 
@@ -53,5 +53,12 @@ class ProfileController extends AsyncNotifier<AuthUser?> {
     final next = user ?? state.value;
     state = AsyncData(next);
     return next;
+  }
+
+  Future<void> deleteAccount() async {
+    final repo = ref.read(profileRepositoryProvider);
+    await repo.deleteAccount();
+    await ref.read(authControllerProvider.notifier).logout();
+    state = const AsyncData(null);
   }
 }

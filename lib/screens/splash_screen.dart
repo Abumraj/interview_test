@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:interview/const.dart';
-import 'package:interview/features/auth/presentation/auth_controller.dart';
 import 'package:interview/screens/dashboard.dart';
-import 'package:interview/screens/signin_screen.dart';
 import 'package:interview/utils/custom_styles.dart';
 import 'package:interview/utils/heights.dart';
 import 'package:interview/utils/page_transitions.dart';
@@ -85,15 +83,10 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   _startTime() async {
     Future.delayed(const Duration(seconds: 2), () {
-      ref.read(authControllerProvider.future).then((auth) {
-        if (!mounted) return;
-        final isLoggedIn = auth.user?.id.isNotEmpty == true;
-        Navigator.of(context).pushReplacement(
-          FadeScaleRoute(
-            page: isLoggedIn ? const Dashboard() : const SigninScreen(),
-          ),
-        );
-      });
+      if (!mounted) return;
+      Navigator.of(
+        context,
+      ).pushReplacement(FadeScaleRoute(page: const Dashboard()));
     });
   }
 }

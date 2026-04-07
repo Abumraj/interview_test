@@ -10,16 +10,17 @@ class AuthApi {
     required String firstName,
     required String lastName,
     required String email,
-    required String phoneNumber,
+    String? phoneNumber,
     required String password,
   }) {
+    final trimmedPhone = (phoneNumber ?? '').trim();
     return _client.post<Map<String, dynamic>>(
       '/auth/register',
       data: <String, dynamic>{
         'firstName': firstName,
         'lastName': lastName,
         'email': email,
-        'phoneNumber': phoneNumber,
+        if (trimmedPhone.isNotEmpty) 'phoneNumber': trimmedPhone,
         'password': password,
       },
     );

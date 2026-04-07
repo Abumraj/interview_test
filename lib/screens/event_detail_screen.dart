@@ -13,7 +13,6 @@ import 'package:interview/features/history/presentation/history_controller.dart'
 import 'package:interview/features/payments/presentation/payments_controller.dart';
 import 'package:interview/features/tickets/presentation/tickets_controller.dart';
 import 'package:interview/screens/event_ticket_list.dart';
-import 'package:interview/screens/order_screen.dart';
 import 'package:interview/screens/payment_webview_screen.dart';
 import 'package:interview/screens/widgets/custom_appbar.dart';
 import 'package:interview/screens/widgets/customized_text.dart';

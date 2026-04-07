@@ -8,6 +8,8 @@ import 'package:interview/screens/Profile_screen.dart';
 import 'package:interview/screens/cart_screen.dart';
 import 'package:interview/screens/notification_screen.dart';
 import 'package:interview/features/bookings/presentation/bookings_controller.dart';
+import 'package:interview/features/auth/presentation/auth_controller.dart';
+import 'package:interview/screens/signin_screen.dart';
 import 'package:interview/utils/page_transitions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -20,6 +22,47 @@ class DashboardHeader extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final cartCount = ref.watch(cartCountProvider);
     final unreadCount = ref.watch(unreadCountProvider).value ?? 0;
+    final userId = ref.watch(authControllerProvider).value?.user?.id ?? '';
+
+    Future<void> showAuthRequired() async {
+      await showDialog<void>(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            backgroundColor: AppColors.subcolor,
+            title: const Text(
+              'Login required',
+              style: TextStyle(color: Colors.white),
+            ),
+            content: const Text(
+              'Please login or create an account to continue.',
+              style: TextStyle(color: Colors.white70),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(ctx).pop(),
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(color: Colors.white70),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                  Navigator.of(
+                    context,
+                  ).push(SlideRightRoute(page: const SigninScreen()));
+                },
+                child: const Text(
+                  'Proceed',
+                  style: TextStyle(color: AppColors.lightBlue),
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -30,6 +73,10 @@ class DashboardHeader extends ConsumerWidget {
             children: [
               GestureDetector(
                 onTap: () {
+                  if (userId.isEmpty) {
+                    showAuthRequired();
+                    return;
+                  }
                   Navigator.of(
                     context,
                   ).push(SlideRightRoute(page: const ProfileScreen()));
@@ -146,6 +193,10 @@ class DashboardHeader extends ConsumerWidget {
                     const SizedBox(width: 16),
                     GestureDetector(
                       onTap: () {
+                        if (userId.isEmpty) {
+                          showAuthRequired();
+                          return;
+                        }
                         Navigator.of(
                           context,
                         ).push(SlideUpRoute(page: const OrderBagScreen()));

@@ -18,8 +18,9 @@ class ProfileApi {
     required String firstName,
     required String lastName,
     required String email,
-    required String phoneNumber,
+    String? phoneNumber,
   }) {
+    final normalizedPhone = (phoneNumber ?? '').trim();
     return _client.put<Map<String, dynamic>>(
       '/users/profile',
       data: <String, dynamic>{
@@ -27,8 +28,12 @@ class ProfileApi {
         'firstName': firstName,
         'lastName': lastName,
         'email': email,
-        'phoneNumber': phoneNumber,
+        if (normalizedPhone.isNotEmpty) 'phoneNumber': normalizedPhone,
       },
     );
+  }
+
+  Future<void> deleteAccount() async {
+    await _client.delete<Object?>('/users/remove-account');
   }
 }

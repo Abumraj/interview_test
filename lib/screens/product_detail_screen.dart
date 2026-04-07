@@ -27,6 +27,7 @@ import 'package:interview/utils/heights.dart';
 import 'package:interview/utils/toast_helper.dart';
 import 'package:interview/utils/page_transitions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:interview/screens/signin_screen.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
   final String productId;
@@ -205,12 +206,14 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
         ToastHelper.showWarning('Please select To and Fro times');
         return;
       }
+
       meta = <String, dynamic>{
         'routes': _selectedRoute.trim(),
         'tripType': tripType,
         'to': toDt.toUtc().toIso8601String(),
         'fro': fromDt.toUtc().toIso8601String(),
       };
+
       final durationToSend = routeMinutes ?? pricing.duration;
       await ref
           .read(cartControllerProvider.notifier)
@@ -225,11 +228,13 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
           );
       return;
     } else {
-      if (category == 'BOAT_CRUISE' || category == 'BOATCRUISE') {
+      final upper = category;
+      if (upper == 'BOAT_CRUISE' || upper == 'BOATCRUISE') {
         if (pricing.options.isNotEmpty && _selectedPricingOption == null) {
           ToastHelper.showWarning('Please select a duration');
           return;
         }
+
         final cap = _selectedPricing?.seatCapacity;
         meta = <String, dynamic>{'people': (cap ?? _people)};
       } else {
@@ -259,6 +264,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
             'meta': meta,
           },
         );
+    return;
   }
 
   List<ProductPricing> _sortedPricing(Product product) {
@@ -402,19 +408,25 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
     if (!mounted) return;
     await showDialog<void>(
       context: context,
-      builder:
-          (ctx) => AlertDialog(
-            title: const Text('No time slots'),
-            content: const Text(
-              'No time slots are available for this product.',
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(ctx).pop(),
-                child: const Text('OK'),
-              ),
-            ],
+      builder: (ctx) {
+        return AlertDialog(
+          backgroundColor: AppColors.subcolor,
+          title: const Text(
+            'No time slots',
+            style: TextStyle(color: Colors.white),
           ),
+          content: const Text(
+            'No time slots are available for this product.',
+            style: TextStyle(color: Colors.white70),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text('OK', style: TextStyle(color: Colors.white70)),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -483,10 +495,51 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
     return null;
   }
 
+  Future<void> _showAuthRequired() async {
+    if (!mounted) return;
+    await showDialog<void>(
+      context: context,
+      builder: (ctx) {
+        return AlertDialog(
+          backgroundColor: AppColors.subcolor,
+          title: const Text(
+            'Login required',
+            style: TextStyle(color: Colors.white),
+          ),
+          content: const Text(
+            'Please login or create an account to continue.',
+            style: TextStyle(color: Colors.white70),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.white70),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(ctx).pop();
+                Navigator.of(
+                  context,
+                ).push(SlideRightRoute(page: const SigninScreen()));
+              },
+              child: const Text(
+                'Proceed',
+                style: TextStyle(color: AppColors.lightBlue),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<Booking?> _createBooking({required Product product}) async {
     final authUser = ref.read(authControllerProvider).value?.user;
     if (authUser == null || authUser.id.isEmpty) {
-      ToastHelper.showWarning('Please login to continue');
+      await _showAuthRequired();
       return null;
     }
 
@@ -604,23 +657,23 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
         );
   }
 
-  Future<void> _addToCart({required Product product}) async {
+  Future<bool> _addToCart({required Product product}) async {
     final authUser = ref.read(authControllerProvider).value?.user;
     if (authUser == null || authUser.id.isEmpty) {
-      ToastHelper.showWarning('Please login to continue');
-      return;
+      await _showAuthRequired();
+      return false;
     }
 
     final pricing = _selectedPricing;
     if (pricing == null || pricing.id.isEmpty) {
       ToastHelper.showWarning('Please select a duration');
-      return;
+      return false;
     }
 
     final startTime = _startTimeIsoForCategory(product.category ?? '');
     if (startTime == null || startTime.isEmpty) {
       ToastHelper.showWarning('Please select a time');
-      return;
+      return false;
     }
 
     final category = (product.category ?? '').toUpperCase();
@@ -653,11 +706,11 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
 
       if (_selectedRoute.trim().isEmpty) {
         ToastHelper.showWarning('Please select a route');
-        return;
+        return false;
       }
       if (toDt == null || fromDt == null) {
         ToastHelper.showWarning('Please select To and Fro times');
-        return;
+        return false;
       }
 
       meta = <String, dynamic>{
@@ -676,13 +729,13 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
             duration: durationToSend.toInt(),
             meta: meta,
           );
-      return;
+      return true;
     } else {
       final upper = category;
       if (upper == 'BOAT_CRUISE' || upper == 'BOATCRUISE') {
         if (pricing.options.isNotEmpty && _selectedPricingOption == null) {
           ToastHelper.showWarning('Please select a duration');
-          return;
+          return false;
         }
 
         final cap = _selectedPricing?.seatCapacity;
@@ -711,6 +764,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
           duration: durationToSend.toInt(),
           meta: meta,
         );
+    return true;
   }
 
   Widget _headerImage(String imageUrl) {
@@ -1843,7 +1897,10 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                                 ref.invalidate(
                                   productDetailsProvider(widget.productId),
                                 );
-                                await _addToCart(product: product);
+                                final added = await _addToCart(
+                                  product: product,
+                                );
+                                if (!added) return;
                                 ref.invalidate(cartItemsProvider);
                                 ref.read(cartCountProvider.notifier).state++;
                                 if (mounted) {

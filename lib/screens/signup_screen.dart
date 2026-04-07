@@ -209,22 +209,19 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 24),
-                            CustomizedTextField(
-                              textTitle: "Phone Number",
-                              textEditingController:
-                                  textPhoneNumberEditingController,
-                              hintTxt: "Enter Phone Number",
-                              textInputAction: TextInputAction.done,
-                              keyboardType: TextInputType.phone,
+                            // const SizedBox(height: 24),
+                            // CustomizedTextField(
+                            //   textTitle: "Phone Number",
+                            //   textEditingController:
+                            //       textPhoneNumberEditingController,
+                            //   hintTxt: "Enter Phone Number",
+                            //   textInputAction: TextInputAction.done,
+                            //   keyboardType: TextInputType.phone,
 
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your phone number';
-                                }
-                                return null;
-                              },
-                            ),
+                            //   validator: (value) {
+                            //     return null;
+                            //   },
+                            // ),
                             const SizedBox(height: 24),
                             CustomizedTextField(
                               textTitle: "Email",
@@ -318,6 +315,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                         .toLowerCase();
 
                                 try {
+                                  final phone =
+                                      textPhoneNumberEditingController.text
+                                          .trim();
                                   await ref
                                       .read(authControllerProvider.notifier)
                                       .registerAndRequestOtp(
@@ -329,9 +329,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                                                 .trim(),
                                         email: email,
                                         phoneNumber:
-                                            textPhoneNumberEditingController
-                                                .text
-                                                .trim(),
+                                            phone.isEmpty ? null : phone,
                                         password:
                                             textPasswordEditingController.text,
                                       );

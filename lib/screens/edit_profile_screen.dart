@@ -254,9 +254,6 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         keyboardType: TextInputType.phone,
 
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your phone number';
-                          }
                           return null;
                         },
                       ),

@@ -38,7 +38,7 @@ class ProfileRepository {
     required String firstName,
     required String lastName,
     required String email,
-    required String phoneNumber,
+    String? phoneNumber,
   }) async {
     print(firstName);
     final json = await _api.updateMe(
@@ -51,4 +51,6 @@ class ProfileRepository {
     print(json);
     return _parseUser(json);
   }
+
+  Future<void> deleteAccount() => _api.deleteAccount();
 }

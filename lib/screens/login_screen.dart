@@ -7,6 +7,7 @@ import 'package:interview/core/network/api_exceptions.dart';
 import 'package:interview/features/auth/presentation/auth_controller.dart';
 import 'package:interview/screens/forgot_password_screen.dart';
 import 'package:interview/screens/dashboard.dart';
+import 'package:interview/screens/signin_screen.dart';
 import 'package:interview/screens/widgets/verify_mail.dart';
 import 'package:interview/screens/widgets/customTextfield.dart';
 import 'package:interview/screens/widgets/custom_back_button.dart';
@@ -81,6 +82,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             //   },
             // ),
           ),
+
           // Main Content
           SafeArea(
             child: Column(
@@ -93,7 +95,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     child: CustomBackButton(
                       onPressed: () {
                         // Handle back navigation
-                        Navigator.pop(context);
+                        Navigator.of(context).pushReplacement(
+                          FadeScaleRoute(page: const SigninScreen()),
+                        );
                       },
                     ),
                   ),

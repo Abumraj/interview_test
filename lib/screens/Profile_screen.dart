@@ -18,6 +18,7 @@ import 'package:interview/utils/page_transitions.dart';
 import 'package:interview/screens/login_screen.dart';
 import 'package:interview/utils/toast_helper.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:interview/screens/dashboard.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -409,10 +410,120 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> with RouteAware {
                 ),
               ),
             ),
+
+            Padding(
+              padding: EdgeInsets.fromLTRB(20.h, 0, 20.h, 24),
+              child: SizedBox(
+                width: double.infinity,
+                height: 50.h,
+                child: OutlinedButton.icon(
+                  style: OutlinedButton.styleFrom(
+                    side: const BorderSide(color: Colors.redAccent),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  icon: const Icon(
+                    Icons.delete_forever,
+                    color: Colors.redAccent,
+                  ),
+                  label: Text(
+                    'Delete Account',
+                    style: TextStyle(
+                      color: Colors.redAccent,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  onPressed: () => _showDeleteAccountDialog(),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _showDeleteAccountDialog() async {
+    var isLoading = false;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder:
+          (ctx) => StatefulBuilder(
+            builder: (context, setDialogState) {
+              Future<void> handleDelete() async {
+                if (isLoading) return;
+                setDialogState(() {
+                  isLoading = true;
+                });
+                try {
+                  await ref
+                      .read(profileControllerProvider.notifier)
+                      .deleteAccount();
+                  if (!ctx.mounted) return;
+                  Navigator.of(ctx).pop(true);
+                } catch (e) {
+                  if (!ctx.mounted) return;
+                  setDialogState(() {
+                    isLoading = false;
+                  });
+                  ToastHelper.showError('Delete account failed: $e');
+                }
+              }
+
+              return PopScope(
+                canPop: !isLoading,
+                child: AlertDialog(
+                  backgroundColor: AppColors.subcolor,
+                  title: const Text(
+                    'Delete Account',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  content: const Text(
+                    'This will permanently delete your account. Do you want to continue?',
+                    style: TextStyle(color: Colors.white70),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed:
+                          isLoading ? null : () => Navigator.of(ctx).pop(false),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: isLoading ? null : handleDelete,
+                      child:
+                          isLoading
+                              ? SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Colors.redAccent,
+                                  ),
+                                ),
+                              )
+                              : const Text(
+                                'Delete',
+                                style: TextStyle(color: Colors.redAccent),
+                              ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+    );
+
+    if (confirmed != true || !mounted) return;
+
+    Navigator.of(context).pushAndRemoveUntil(
+      FadeScaleRoute(page: const Dashboard()),
+      (route) => false,
+    );
+    ToastHelper.showSuccess('Account deleted');
   }
 
   Future<void> _showLogoutDialog() async {

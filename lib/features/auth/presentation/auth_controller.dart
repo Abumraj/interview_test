@@ -68,7 +68,7 @@ class AuthController extends AsyncNotifier<AuthState> {
     required String firstName,
     required String lastName,
     required String email,
-    required String phoneNumber,
+    String? phoneNumber,
     required String password,
   }) async {
     state = const AsyncLoading();
