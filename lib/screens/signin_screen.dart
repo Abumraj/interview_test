@@ -72,23 +72,23 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
       final user = ref.read(authControllerProvider).value?.user;
       final isVerified = user?.isVerified == true;
       final otpAvailable =
-          ref.read(authControllerProvider).value?.isOtpAvailable ?? true;
-      if (!isVerified && otpAvailable) {
-        final email = user?.email?.trim();
-        if (email == null || email.isEmpty) {
-          throw const UnknownApiException(
-            message: 'Email verification required but user email is missing',
-          );
-        }
-        ToastHelper.showWarning(
-          'Email not verified. Enter the OTP sent to your email.',
-        );
-        if (!mounted) return;
-        Navigator.of(
-          context,
-        ).pushReplacement(FadeScaleRoute(page: VerifyMail(email: email)));
-        return;
-      }
+          ref.read(authControllerProvider).value?.isOtpAvailable ?? false;
+      // if (!isVerified && otpAvailable) {
+      //   final email = user?.email?.trim();
+      //   if (email == null || email.isEmpty) {
+      //     throw const UnknownApiException(
+      //       message: 'Email verification required but user email is missing',
+      //     );
+      //   }
+      //   ToastHelper.showWarning(
+      //     'Email not verified. Enter the OTP sent to your email.',
+      //   );
+      //   if (!mounted) return;
+      //   Navigator.of(
+      //     context,
+      //   ).pushReplacement(FadeScaleRoute(page: VerifyMail(email: email)));
+      //   return;
+      // }
 
       ToastHelper.showSuccess('Login successful');
       ref.invalidate(myTicketsControllerProvider);
