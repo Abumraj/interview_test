@@ -2,6 +2,13 @@ import '../../../core/network/token_storage.dart';
 import '../domain/auth_user.dart';
 import 'auth_api.dart';
 
+class AuthResult {
+  final AuthUser user;
+  final bool isOtpAvailable;
+
+  const AuthResult({required this.user, required this.isOtpAvailable});
+}
+
 class AuthRepository {
   AuthRepository({required AuthApi api, required TokenStorage tokenStorage})
     : _api = api,
@@ -47,7 +54,18 @@ class AuthRepository {
     return null;
   }
 
-  Future<AuthUser> register({
+  bool _extractIsOtpAvailable(
+    Map<String, dynamic> json,
+    Map<String, dynamic> payload,
+  ) {
+    final fromPayload = payload['isOtpAvailable'];
+    if (fromPayload is bool) return fromPayload;
+    final fromRoot = json['isOtpAvailable'];
+    if (fromRoot is bool) return fromRoot;
+    return true;
+  }
+
+  Future<AuthResult> register({
     required String firstName,
     required String lastName,
     required String email,
@@ -61,27 +79,31 @@ class AuthRepository {
       phoneNumber: phoneNumber,
       password: password,
     );
-    print(json);
-    final userJson = json['user'];
-    if (userJson is Map<String, dynamic>) {
-      return AuthUser.fromJson(userJson);
-    }
-    return const AuthUser(id: '');
+    final payload = _normalizeAuthPayload(json);
+    final isOtpAvailable = _extractIsOtpAvailable(json, payload);
+    final userJson =
+        _extractUserJson(json, payload) ??
+        (json['user'] as Map<String, dynamic>?);
+    final user =
+        userJson == null ? const AuthUser(id: '') : AuthUser.fromJson(userJson);
+    return AuthResult(user: user, isOtpAvailable: isOtpAvailable);
   }
 
-  Future<AuthUser> googleLogin({required String token}) async {
+  Future<AuthResult> googleLogin({required String token}) async {
     final json = await _api.googleLogin(token: token);
 
     final payload = _normalizeAuthPayload(json);
     await _persistTokensIfPresent(payload);
 
-    final userJson = _extractUserJson(json, payload);
-    if (userJson != null) return AuthUser.fromJson(userJson);
+    final isOtpAvailable = _extractIsOtpAvailable(json, payload);
 
-    return const AuthUser(id: '');
+    final userJson = _extractUserJson(json, payload);
+    final user =
+        userJson == null ? const AuthUser(id: '') : AuthUser.fromJson(userJson);
+    return AuthResult(user: user, isOtpAvailable: isOtpAvailable);
   }
 
-  Future<AuthUser> login({
+  Future<AuthResult> login({
     required String email,
     required String password,
   }) async {
@@ -90,10 +112,12 @@ class AuthRepository {
     final payload = _normalizeAuthPayload(json);
     await _persistTokensIfPresent(payload);
 
-    final userJson = _extractUserJson(json, payload);
-    if (userJson != null) return AuthUser.fromJson(userJson);
+    final isOtpAvailable = _extractIsOtpAvailable(json, payload);
 
-    return const AuthUser(id: '');
+    final userJson = _extractUserJson(json, payload);
+    final user =
+        userJson == null ? const AuthUser(id: '') : AuthUser.fromJson(userJson);
+    return AuthResult(user: user, isOtpAvailable: isOtpAvailable);
   }
 
   Future<String?> refreshAccessToken() async {

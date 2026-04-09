@@ -9,10 +9,11 @@ import 'package:interview/features/auth/presentation/auth_controller.dart';
 import 'package:interview/screens/widgets/customTextfield.dart';
 import 'package:interview/screens/widgets/custom_back_button.dart';
 import 'package:interview/screens/widgets/primary_button.dart';
-import 'package:interview/screens/widgets/verify_mail.dart';
 import 'package:interview/utils/heights.dart';
-import 'package:interview/utils/toast_helper.dart';
 import 'package:interview/utils/page_transitions.dart';
+import 'package:interview/utils/toast_helper.dart';
+import 'package:interview/screens/widgets/verify_mail.dart';
+import 'package:interview/screens/login_screen.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
@@ -336,9 +337,18 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
                                   ToastHelper.showSuccess('Signup successful');
                                   if (!mounted) return;
+                                  final otpAvailable =
+                                      ref
+                                          .read(authControllerProvider)
+                                          .value
+                                          ?.isOtpAvailable ??
+                                      true;
                                   Navigator.of(context).pushReplacement(
                                     FadeScaleRoute(
-                                      page: VerifyMail(email: email),
+                                      page:
+                                          otpAvailable
+                                              ? VerifyMail(email: email)
+                                              : const LoginScreen(),
                                     ),
                                   );
                                 } catch (e) {

@@ -12,8 +12,9 @@ import '../domain/auth_user.dart';
 
 class AuthState {
   final AuthUser? user;
+  final bool? isOtpAvailable;
 
-  const AuthState({this.user});
+  const AuthState({this.user, this.isOtpAvailable});
 }
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
@@ -48,11 +49,14 @@ class AuthController extends AsyncNotifier<AuthState> {
     state = const AsyncLoading();
     try {
       final repo = ref.read(authRepositoryProvider);
-      final user = await repo.googleLogin(token: firebaseIdToken);
+      final result = await repo.googleLogin(token: firebaseIdToken);
+      final user = result.user;
       await ref
           .read(cacheManagerProvider)
           .writeJson('auth_user', user.toJson());
-      state = AsyncData(AuthState(user: user));
+      state = AsyncData(
+        AuthState(user: user, isOtpAvailable: result.isOtpAvailable),
+      );
 
       ref.read(profileControllerProvider.notifier).refresh();
 
@@ -74,15 +78,19 @@ class AuthController extends AsyncNotifier<AuthState> {
     state = const AsyncLoading();
     try {
       final repo = ref.read(authRepositoryProvider);
-      final user = await repo.register(
+      final result = await repo.register(
         firstName: firstName,
         lastName: lastName,
         email: email,
         phoneNumber: phoneNumber,
         password: password,
       );
-      await repo.requestOtp(email: email);
-      state = AsyncData(AuthState(user: user));
+      if (result.isOtpAvailable) {
+        await repo.requestOtp(email: email);
+      }
+      state = AsyncData(
+        AuthState(user: result.user, isOtpAvailable: result.isOtpAvailable),
+      );
     } catch (e, st) {
       state = AsyncError(e, st);
       rethrow;
@@ -93,11 +101,14 @@ class AuthController extends AsyncNotifier<AuthState> {
     state = const AsyncLoading();
     try {
       final repo = ref.read(authRepositoryProvider);
-      final user = await repo.login(email: email, password: password);
+      final result = await repo.login(email: email, password: password);
+      final user = result.user;
       await ref
           .read(cacheManagerProvider)
           .writeJson('auth_user', user.toJson());
-      state = AsyncData(AuthState(user: user));
+      state = AsyncData(
+        AuthState(user: user, isOtpAvailable: result.isOtpAvailable),
+      );
 
       ref.read(profileControllerProvider.notifier).refresh();
 

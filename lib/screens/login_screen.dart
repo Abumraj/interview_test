@@ -5,13 +5,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:interview/const.dart';
 import 'package:interview/core/network/api_exceptions.dart';
 import 'package:interview/features/auth/presentation/auth_controller.dart';
-import 'package:interview/screens/forgot_password_screen.dart';
+import 'package:interview/features/history/presentation/history_controller.dart';
+import 'package:interview/features/tickets/presentation/tickets_controller.dart';
 import 'package:interview/screens/dashboard.dart';
 import 'package:interview/screens/signin_screen.dart';
-import 'package:interview/screens/widgets/verify_mail.dart';
+import 'package:interview/screens/forgot_password_screen.dart';
 import 'package:interview/screens/widgets/customTextfield.dart';
-import 'package:interview/screens/widgets/custom_back_button.dart';
 import 'package:interview/screens/widgets/primary_button.dart';
+import 'package:interview/screens/widgets/verify_mail.dart';
+import 'package:interview/screens/widgets/custom_back_button.dart';
 import 'package:interview/utils/heights.dart';
 import 'package:interview/utils/toast_helper.dart';
 import 'package:interview/utils/page_transitions.dart';
@@ -234,8 +236,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                         ?.user;
                                 print(user?.isVerified);
                                 final isVerified = user?.isVerified == true;
+                                final otpAvailable =
+                                    ref
+                                        .read(authControllerProvider)
+                                        .value
+                                        ?.isOtpAvailable ??
+                                    true;
 
-                                if (!isVerified) {
+                                if (!isVerified && otpAvailable) {
                                   final email = user?.email?.trim();
                                   if (email == null || email.isEmpty) {
                                     throw const UnknownApiException(
@@ -256,6 +264,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 }
 
                                 ToastHelper.showSuccess('Login successful');
+                                ref.invalidate(myTicketsControllerProvider);
+                                ref.invalidate(purchasesControllerProvider);
                                 if (!mounted) return;
                                 Navigator.of(context).pushReplacement(
                                   FadeScaleRoute(page: const Dashboard()),

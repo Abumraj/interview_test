@@ -10,6 +10,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:interview/const.dart';
 import 'package:interview/core/network/api_exceptions.dart';
 import 'package:interview/features/auth/presentation/auth_controller.dart';
+import 'package:interview/features/history/presentation/history_controller.dart';
+import 'package:interview/features/tickets/presentation/tickets_controller.dart';
 import 'package:interview/screens/dashboard.dart';
 import 'package:interview/screens/login_screen.dart';
 import 'package:interview/screens/signup_screen.dart';
@@ -69,7 +71,9 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
 
       final user = ref.read(authControllerProvider).value?.user;
       final isVerified = user?.isVerified == true;
-      if (!isVerified) {
+      final otpAvailable =
+          ref.read(authControllerProvider).value?.isOtpAvailable ?? true;
+      if (!isVerified && otpAvailable) {
         final email = user?.email?.trim();
         if (email == null || email.isEmpty) {
           throw const UnknownApiException(
@@ -87,6 +91,8 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
       }
 
       ToastHelper.showSuccess('Login successful');
+      ref.invalidate(myTicketsControllerProvider);
+      ref.invalidate(purchasesControllerProvider);
       if (!mounted) return;
       Navigator.of(
         context,
