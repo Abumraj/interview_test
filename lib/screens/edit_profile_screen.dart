@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:interview/const.dart';
 import 'package:interview/core/network/api_exceptions.dart';
 import 'package:interview/features/auth/presentation/auth_controller.dart';
+import 'package:interview/features/auth/domain/auth_user.dart';
 import 'package:interview/features/profile/presentation/profile_controller.dart';
 import 'package:interview/screens/widgets/customTextfield.dart';
 import 'package:interview/screens/widgets/custom_appbar.dart';
@@ -13,7 +14,9 @@ import 'package:interview/screens/widgets/primary_button.dart';
 import 'package:interview/utils/toast_helper.dart';
 
 class EditProfileScreen extends ConsumerStatefulWidget {
-  const EditProfileScreen({super.key});
+  const EditProfileScreen({super.key, this.initialUser});
+
+  final AuthUser? initialUser;
 
   @override
   ConsumerState<EditProfileScreen> createState() => _EditProfileScreenState();
@@ -27,9 +30,10 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
   late TextEditingController textPhoneNumberEditingController;
   bool isLoading = false;
 
-  void _prefillFromAuthUserIfEmpty() {
-    final user = ref.read(authControllerProvider).value?.user;
-    if (user == null) return;
+  void _prefillFromUserIfEmpty(AuthUser? user) {
+    if (user == null) {
+      return;
+    }
 
     if (textFirstNameEditingController.text.trim().isEmpty) {
       textFirstNameEditingController.text = (user.firstName ?? '').trim();
@@ -45,6 +49,11 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     }
   }
 
+  void _prefillFromAvailableUserIfEmpty() {
+    _prefillFromUserIfEmpty(widget.initialUser);
+    _prefillFromUserIfEmpty(ref.read(authControllerProvider).value?.user);
+  }
+
   @override
   void initState() {
     textEmailEditingController = TextEditingController();
@@ -54,7 +63,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _prefillFromAuthUserIfEmpty();
+      _prefillFromAvailableUserIfEmpty();
       setState(() {});
     });
   }
@@ -234,6 +243,7 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                         onChanged: (p0) {
                           setState(() {});
                         },
+                        readOnly: true,
 
                         validator: (value) {
                           if (value == null || value.isEmpty) {

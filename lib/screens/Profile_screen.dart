@@ -137,7 +137,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> with RouteAware {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                displayName,
+                                displayName.length < 14
+                                    ? displayName
+                                    : displayName.trim().substring(0, 14),
+
                                 style: CustomTextStyle.headlineSmall.copyWith(
                                   color: Colors.white,
                                 ),
@@ -168,7 +171,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> with RouteAware {
                             onPressed: () async {
                               await Navigator.of(context).push(
                                 SlideRightRoute(
-                                  page: const EditProfileScreen(),
+                                  page: EditProfileScreen(initialUser: user),
                                 ),
                               );
 
@@ -321,18 +324,62 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> with RouteAware {
                         color: AppColors.whiteColor,
                       ),
                     ),
+                    height10,
+                    Container(
+                      padding: const EdgeInsets.all(18),
+                      decoration: BoxDecoration(
+                        color: AppColors.subcolor,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      width: MediaQuery.of(context).size.width - 40.w,
+                      height: 160.h,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.location_on,
+                                color: AppColors.whiteColor,
+                              ),
+                              SizedBox(width: 10.w),
+                              Text(
+                                'Address ',
+                                style: CustomTextStyle.bodySmall.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14.sp,
+                                ),
+                              ),
+                            ],
+                          ),
+                          height10,
+                          Text(
+                            "(Upbeat Recreation Centre, Lekki, Lagos)\nThe Wings Complex,\n17A, Ozumba Mbadiwe Avenue, Victoria Island, Lagos",
+                            style: CustomTextStyle.bodyMedium.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14.sp,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
                     height4,
+
                     TextButton(
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.zero,
-                        fixedSize: Size(180.w, 30.h),
+                        fixedSize: Size(230.w, 30.h),
 
                         backgroundColor: AppColors.subcolor,
                       ),
                       onPressed: () async {
                         final uri = Uri(
                           scheme: 'mailto',
-                          path: 'hello@lwc.com.ng',
+                          path: 'enquiry@laygoswatercrafts.com',
                         );
                         await launchUrl(
                           uri,
@@ -344,7 +391,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> with RouteAware {
                           SizedBox(width: 10.w),
                           Icon(Icons.email, color: AppColors.whiteColor),
                           Text(
-                            "hello@lwc.com.ng",
+                            "enquiry@laygoswatercrafts.com",
                             style: CustomTextStyle.caption1.copyWith(
                               color: AppColors.whiteColor,
                             ),
@@ -361,7 +408,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> with RouteAware {
                         backgroundColor: AppColors.subcolor,
                       ),
                       onPressed: () async {
-                        final number = '+234812345678';
+                        final number = '+234 (0)704 907 0759';
                         final uri = Uri(scheme: 'tel', path: number);
                         await launchUrl(
                           uri,
@@ -373,7 +420,65 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> with RouteAware {
                           SizedBox(width: 10.w),
                           Icon(Icons.phone, color: AppColors.whiteColor),
                           Text(
-                            "+2348 1 234 5678",
+                            "+234 (0)704 907 0759",
+                            style: CustomTextStyle.caption1.copyWith(
+                              color: AppColors.whiteColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        fixedSize: Size(160.w, 30.h),
+
+                        backgroundColor: AppColors.subcolor,
+                      ),
+                      onPressed: () async {
+                        final number = '+234 (0)809 999 7227';
+                        final uri = Uri(scheme: 'tel', path: number);
+                        await launchUrl(
+                          uri,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          SizedBox(width: 10.w),
+                          Icon(Icons.phone, color: AppColors.whiteColor),
+                          Text(
+                            "+234 (0)809 999 7227",
+                            style: CustomTextStyle.caption1.copyWith(
+                              color: AppColors.whiteColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        fixedSize: Size(160.w, 30.h),
+
+                        backgroundColor: AppColors.subcolor,
+                      ),
+                      onPressed: () async {
+                        final number = '+234 (0) 707 721 6709';
+                        final uri = Uri(scheme: 'tel', path: number);
+                        await launchUrl(
+                          uri,
+                          mode: LaunchMode.externalApplication,
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          SizedBox(width: 10.w),
+                          Icon(Icons.phone, color: AppColors.whiteColor),
+                          Text(
+                            "+234 (0) 707 721 6709",
                             style: CustomTextStyle.caption1.copyWith(
                               color: AppColors.whiteColor,
                             ),
